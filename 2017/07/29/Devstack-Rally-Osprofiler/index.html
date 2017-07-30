@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017/7 | Blog</title>
+  <title>rally+osprofiler对openstack进行性能测试 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Blog">
-<meta property="og:url" content="http://yoursite.com/archives/2017/07/index.html">
+  <meta name="description" content="##一. devsatck+rally+osprofiler环境的搭建 ###1. 下载资源    git clone https://git.openstack.org/openstack-dev/devstack    git clone https://github.com/openstack/rally ###2.  创建非root用户(stack)用于安装devstack    cd d">
+<meta property="og:type" content="article">
+<meta property="og:title" content="rally+osprofiler对openstack进行性能测试">
+<meta property="og:url" content="http://yoursite.com/2017/07/29/Devstack-Rally-Osprofiler/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="##一. devsatck+rally+osprofiler环境的搭建 ###1. 下载资源    git clone https://git.openstack.org/openstack-dev/devstack    git clone https://github.com/openstack/rally ###2.  创建非root用户(stack)用于安装devstack    cd d">
+<meta property="og:updated_time" content="2017-07-30T07:59:30.683Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
+<meta name="twitter:title" content="rally+osprofiler对openstack进行性能测试">
+<meta name="twitter:description" content="##一. devsatck+rally+osprofiler环境的搭建 ###1. 下载资源    git clone https://git.openstack.org/openstack-dev/devstack    git clone https://github.com/openstack/rally ###2.  创建非root用户(stack)用于安装devstack    cd d">
   
     <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -149,76 +153,183 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Devstack-Rally-Osprofiler" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      rally+osprofiler对openstack进行性能测试
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/29/Devstack-Rally-Osprofiler/" class="archive-article-date">
+
+        
+        <a href="/2017/07/29/Devstack-Rally-Osprofiler/" class="archive-article-date">
   	<time datetime="2017-07-30T06:57:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-29</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/29/Devstack-Rally-Osprofiler/">rally+osprofiler对openstack进行性能测试</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##一. devsatck+rally+osprofiler环境的搭建</p>
+<p>###1. 下载资源<br>    git clone <a href="https://git.openstack.org/openstack-dev/devstack" target="_blank" rel="external">https://git.openstack.org/openstack-dev/devstack</a><br>    git clone <a href="https://github.com/openstack/rally" target="_blank" rel="external">https://github.com/openstack/rally</a></p>
+<p>###2.  创建非root用户(stack)用于安装devstack<br>    cd devstack/tools<br>    ./create-stack-user.sh<br>    su - stack</p>
+<p>###3.  配置local.conf(devstack安装配置文件)<br>    cp samples/local.conf local.conf<br>    在local.conf配置一下内容:<br>    [[local|localrc]]<br>    enable_plugin rally <a href="https://github.com/openstack/rally" target="_blank" rel="external">https://github.com/openstack/rally</a> master<br>    enable_plugin osprofiler <a href="https://github.com/openstack/osprofiler" target="_blank" rel="external">https://github.com/openstack/osprofiler</a> master</p>
+<pre><code>#全局的osprofiler配置
+#add profiler topic
+    CEILOMETER_NOTIFICATION_TOPICS=notifications.profiler        OSPROFILER_CONNECTION_STRING=mongodb://localhost:27017(osprofiler默认用ceilometer进行数据交互)
 
-        <div class="article-info info-on-right">
-          
-          
+#单个服务的osprofiler配置
+[[post-config|$NOVA_CONF]]
+[profiler]
+enable = True
+trace_sqlalchemy = True
+hmac_keys = charlie (默认为SECRET_KEY)
+connection_string = mongodb://localhost:27017
 
+注: 如果在local.conf里面没有配置，在devstack安装完毕后也配置/etc下相关服务的conf文件并重启相关组件进行osprofiler的启用
+
+查看组件命令: systemctl status &quot;devstack@*&quot;
+重启组件命令: systemctl restart &quot;devstack@n-*&quot;
+</code></pre><p>###4.    安装devstack<br>    ./stack.sh</p>
+<pre><code>注: 安装失败的最常见原因是下包失败，请安装前确认自己的源配置，建议使用阿里云的源进行安装
+</code></pre><p>###5.  确认openstack的组件状态<br>    . openrc admin admin<br>    openstack servlice list</p>
+<p>##二: 测试osprofiler是否可用</p>
+<p>###1. 选一个启用了osprofiler的组件进行测试(建议选用Cinder, 我在用测试Nova的时候调用失败)<br>    cinder –profiler SECRET_KEY create 5 –name test-profile<br>    osprofiler trace show –html xxx –connection-string=mongodb://localhost:27017<br>    正常打印网页说明调用正常</p>
+<p>##三: Rally和Osprofiler进行集成测试</p>
+<p>###1.导入osprofiler的环境变量<br>    export OSPROFILER_HMAC_KEY=SECRET_KEY</p>
+<p>###2. 创建rally测试<br>    rally deployment create –fromenv –name=existing</p>
+<p>###3. 运行rally测试任务，可用rally自带的测试文件<br>    rally task start samples/tasks/scenarios/cinder/create-volume.json</p>
+<p>###4. 生成测试报告<br>    rally task report XXX –out output.html</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/07/29/Devstack-Rally-Osprofiler/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/20/hello-world/" class="archive-article-date">
-  	<time datetime="2017-07-20T09:17:14.943Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hello World</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/20/hello-world/">Hello World</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -241,8 +352,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

@@ -151,6 +151,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Devstack-Rally-Osprofiler" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/29/Devstack-Rally-Osprofiler/">rally+osprofiler对openstack进行性能测试</a>
+    </h1>
+  
+
+        
+        <a href="/2017/07/29/Devstack-Rally-Osprofiler/" class="archive-article-date">
+  	<time datetime="2017-07-30T06:57:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##一. devsatck+rally+osprofiler环境的搭建</p>
+<p>###1. 下载资源<br>    git clone <a href="https://git.openstack.org/openstack-dev/devstack" target="_blank" rel="external">https://git.openstack.org/openstack-dev/devstack</a><br>    git clone <a href="https://github.com/openstack/rally" target="_blank" rel="external">https://github.com/openstack/rally</a></p>
+<p>###2.  创建非root用户(stack)用于安装devstack<br>    cd devstack/tools<br>    ./create-stack-user.sh<br>    su - stack</p>
+<p>###3.  配置local.conf(devstack安装配置文件)<br>    cp samples/local.conf local.conf<br>    在local.conf配置一下内容:<br>    [[local|localrc]]<br>    enable_plugin rally <a href="https://github.com/openstack/rally" target="_blank" rel="external">https://github.com/openstack/rally</a> master<br>    enable_plugin osprofiler <a href="https://github.com/openstack/osprofiler" target="_blank" rel="external">https://github.com/openstack/osprofiler</a> master</p>
+<pre><code>#全局的osprofiler配置
+#add profiler topic
+    CEILOMETER_NOTIFICATION_TOPICS=notifications.profiler        OSPROFILER_CONNECTION_STRING=mongodb://localhost:27017(osprofiler默认用ceilometer进行数据交互)
+
+#单个服务的osprofiler配置
+[[post-config|$NOVA_CONF]]
+[profiler]
+enable = True
+trace_sqlalchemy = True
+hmac_keys = charlie (默认为SECRET_KEY)
+connection_string = mongodb://localhost:27017
+
+注: 如果在local.conf里面没有配置，在devstack安装完毕后也配置/etc下相关服务的conf文件并重启相关组件进行osprofiler的启用
+
+查看组件命令: systemctl status &quot;devstack@*&quot;
+重启组件命令: systemctl restart &quot;devstack@n-*&quot;
+</code></pre><p>###4.    安装devstack<br>    ./stack.sh</p>
+<pre><code>注: 安装失败的最常见原因是下包失败，请安装前确认自己的源配置，建议使用阿里云的源进行安装
+</code></pre><p>###5.  确认openstack的组件状态<br>    . openrc admin admin<br>    openstack servlice list</p>
+<p>##二: 测试osprofiler是否可用</p>
+<p>###1. 选一个启用了osprofiler的组件进行测试(建议选用Cinder, 我在用测试Nova的时候调用失败)<br>    cinder –profiler SECRET_KEY create 5 –name test-profile<br>    osprofiler trace show –html xxx –connection-string=mongodb://localhost:27017<br>    正常打印网页说明调用正常</p>
+<p>##三: Rally和Osprofiler进行集成测试</p>
+<p>###1.导入osprofiler的环境变量<br>    export OSPROFILER_HMAC_KEY=SECRET_KEY</p>
+<p>###2. 创建rally测试<br>    rally deployment create –fromenv –name=existing</p>
+<p>###3. 运行rally测试任务，可用rally自带的测试文件<br>    rally task start samples/tasks/scenarios/cinder/create-volume.json</p>
+<p>###4. 生成测试报告<br>    rally task report XXX –out output.html</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/07/29/Devstack-Rally-Osprofiler/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
