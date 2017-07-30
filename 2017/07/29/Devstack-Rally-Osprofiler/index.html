@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>rally+osprofiler对openstack进行性能测试 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##一. devsatck+rally+osprofiler环境的搭建 ###1. 下载资源    git clone https://git.openstack.org/openstack-dev/devstack    git clone https://github.com/openstack/rally ###2.  创建非root用户(stack)用于安装devstack    cd d">
+  <meta name="description" content="一. devsatck+rally+osprofiler环境的搭建1. 下载资源git clone https://git.openstack.org/openstack-dev/devstack git clone https://github.com/openstack/rally 2.  创建非root用户(stack)用于安装devstackcd devstack/tools ./crea">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rally+osprofiler对openstack进行性能测试">
 <meta property="og:url" content="http://yoursite.com/2017/07/29/Devstack-Rally-Osprofiler/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="##一. devsatck+rally+osprofiler环境的搭建 ###1. 下载资源    git clone https://git.openstack.org/openstack-dev/devstack    git clone https://github.com/openstack/rally ###2.  创建非root用户(stack)用于安装devstack    cd d">
-<meta property="og:updated_time" content="2017-07-30T07:59:30.683Z">
+<meta property="og:description" content="一. devsatck+rally+osprofiler环境的搭建1. 下载资源git clone https://git.openstack.org/openstack-dev/devstack git clone https://github.com/openstack/rally 2.  创建非root用户(stack)用于安装devstackcd devstack/tools ./crea">
+<meta property="og:updated_time" content="2017-07-30T08:02:29.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rally+osprofiler对openstack进行性能测试">
-<meta name="twitter:description" content="##一. devsatck+rally+osprofiler环境的搭建 ###1. 下载资源    git clone https://git.openstack.org/openstack-dev/devstack    git clone https://github.com/openstack/rally ###2.  创建非root用户(stack)用于安装devstack    cd d">
+<meta name="twitter:description" content="一. devsatck+rally+osprofiler环境的搭建1. 下载资源git clone https://git.openstack.org/openstack-dev/devstack git clone https://github.com/openstack/rally 2.  创建非root用户(stack)用于安装devstackcd devstack/tools ./crea">
   
     <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -173,11 +173,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##一. devsatck+rally+osprofiler环境的搭建</p>
-<p>###1. 下载资源<br>    git clone <a href="https://git.openstack.org/openstack-dev/devstack" target="_blank" rel="external">https://git.openstack.org/openstack-dev/devstack</a><br>    git clone <a href="https://github.com/openstack/rally" target="_blank" rel="external">https://github.com/openstack/rally</a></p>
-<p>###2.  创建非root用户(stack)用于安装devstack<br>    cd devstack/tools<br>    ./create-stack-user.sh<br>    su - stack</p>
-<p>###3.  配置local.conf(devstack安装配置文件)<br>    cp samples/local.conf local.conf<br>    在local.conf配置一下内容:<br>    [[local|localrc]]<br>    enable_plugin rally <a href="https://github.com/openstack/rally" target="_blank" rel="external">https://github.com/openstack/rally</a> master<br>    enable_plugin osprofiler <a href="https://github.com/openstack/osprofiler" target="_blank" rel="external">https://github.com/openstack/osprofiler</a> master</p>
-<pre><code>#全局的osprofiler配置
+        <h2 id="一-devsatck-rally-osprofiler环境的搭建"><a href="#一-devsatck-rally-osprofiler环境的搭建" class="headerlink" title="一. devsatck+rally+osprofiler环境的搭建"></a>一. devsatck+rally+osprofiler环境的搭建</h2><h3 id="1-下载资源"><a href="#1-下载资源" class="headerlink" title="1. 下载资源"></a>1. 下载资源</h3><pre><code>git clone https://git.openstack.org/openstack-dev/devstack
+git clone https://github.com/openstack/rally
+</code></pre><h3 id="2-创建非root用户-stack-用于安装devstack"><a href="#2-创建非root用户-stack-用于安装devstack" class="headerlink" title="2.  创建非root用户(stack)用于安装devstack"></a>2.  创建非root用户(stack)用于安装devstack</h3><pre><code>cd devstack/tools
+./create-stack-user.sh
+su - stack
+</code></pre><h3 id="3-配置local-conf-devstack安装配置文件"><a href="#3-配置local-conf-devstack安装配置文件" class="headerlink" title="3.  配置local.conf(devstack安装配置文件)"></a>3.  配置local.conf(devstack安装配置文件)</h3><pre><code>cp samples/local.conf local.conf
+在local.conf配置一下内容:
+[[local|localrc]]
+enable_plugin rally https://github.com/openstack/rally master
+enable_plugin osprofiler https://github.com/openstack/osprofiler master
+
+#全局的osprofiler配置
 #add profiler topic
     CEILOMETER_NOTIFICATION_TOPICS=notifications.profiler        OSPROFILER_CONNECTION_STRING=mongodb://localhost:27017(osprofiler默认用ceilometer进行数据交互)
 
@@ -193,17 +200,19 @@ connection_string = mongodb://localhost:27017
 
 查看组件命令: systemctl status &quot;devstack@*&quot;
 重启组件命令: systemctl restart &quot;devstack@n-*&quot;
-</code></pre><p>###4.    安装devstack<br>    ./stack.sh</p>
-<pre><code>注: 安装失败的最常见原因是下包失败，请安装前确认自己的源配置，建议使用阿里云的源进行安装
-</code></pre><p>###5.  确认openstack的组件状态<br>    . openrc admin admin<br>    openstack servlice list</p>
-<p>##二: 测试osprofiler是否可用</p>
-<p>###1. 选一个启用了osprofiler的组件进行测试(建议选用Cinder, 我在用测试Nova的时候调用失败)<br>    cinder –profiler SECRET_KEY create 5 –name test-profile<br>    osprofiler trace show –html xxx –connection-string=mongodb://localhost:27017<br>    正常打印网页说明调用正常</p>
-<p>##三: Rally和Osprofiler进行集成测试</p>
-<p>###1.导入osprofiler的环境变量<br>    export OSPROFILER_HMAC_KEY=SECRET_KEY</p>
-<p>###2. 创建rally测试<br>    rally deployment create –fromenv –name=existing</p>
-<p>###3. 运行rally测试任务，可用rally自带的测试文件<br>    rally task start samples/tasks/scenarios/cinder/create-volume.json</p>
-<p>###4. 生成测试报告<br>    rally task report XXX –out output.html</p>
+</code></pre><h3 id="4-安装devstack"><a href="#4-安装devstack" class="headerlink" title="4.    安装devstack"></a>4.    安装devstack</h3><pre><code>./stack.sh
 
+注: 安装失败的最常见原因是下包失败，请安装前确认自己的源配置，建议使用阿里云的源进行安装
+</code></pre><h3 id="5-确认openstack的组件状态"><a href="#5-确认openstack的组件状态" class="headerlink" title="5.  确认openstack的组件状态"></a>5.  确认openstack的组件状态</h3><pre><code>. openrc admin admin
+openstack servlice list
+</code></pre><h2 id="二-测试osprofiler是否可用"><a href="#二-测试osprofiler是否可用" class="headerlink" title="二: 测试osprofiler是否可用"></a>二: 测试osprofiler是否可用</h2><h3 id="1-选一个启用了osprofiler的组件进行测试-建议选用Cinder-我在用测试Nova的时候调用失败"><a href="#1-选一个启用了osprofiler的组件进行测试-建议选用Cinder-我在用测试Nova的时候调用失败" class="headerlink" title="1. 选一个启用了osprofiler的组件进行测试(建议选用Cinder, 我在用测试Nova的时候调用失败)"></a>1. 选一个启用了osprofiler的组件进行测试(建议选用Cinder, 我在用测试Nova的时候调用失败)</h3><pre><code>cinder --profiler SECRET_KEY create 5 --name test-profile 
+osprofiler trace show --html xxx --connection-string=mongodb://localhost:27017
+正常打印网页说明调用正常
+</code></pre><h2 id="三-Rally和Osprofiler进行集成测试"><a href="#三-Rally和Osprofiler进行集成测试" class="headerlink" title="三: Rally和Osprofiler进行集成测试"></a>三: Rally和Osprofiler进行集成测试</h2><h3 id="1-导入osprofiler的环境变量"><a href="#1-导入osprofiler的环境变量" class="headerlink" title="1.导入osprofiler的环境变量"></a>1.导入osprofiler的环境变量</h3><pre><code>export OSPROFILER_HMAC_KEY=SECRET_KEY
+</code></pre><h3 id="2-创建rally测试"><a href="#2-创建rally测试" class="headerlink" title="2. 创建rally测试"></a>2. 创建rally测试</h3><pre><code>rally deployment create --fromenv --name=existing
+</code></pre><h3 id="3-运行rally测试任务，可用rally自带的测试文件"><a href="#3-运行rally测试任务，可用rally自带的测试文件" class="headerlink" title="3. 运行rally测试任务，可用rally自带的测试文件"></a>3. 运行rally测试任务，可用rally自带的测试文件</h3><pre><code>rally task start samples/tasks/scenarios/cinder/create-volume.json
+</code></pre><h3 id="4-生成测试报告"><a href="#4-生成测试报告" class="headerlink" title="4. 生成测试报告"></a>4. 生成测试报告</h3><pre><code>rally task report XXX --out output.html
+</code></pre>
       
 
       
