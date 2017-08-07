@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | Blog</title>
+  <title>Tempest简介 | Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Blog">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="一. 什么是tempestOpenStack的官方集成测试框架, 可以在一个活动的OpenStack集群上运行。 tempest可用于OpenStack API验证、场景和其他特定测试的测试，用于验证OpenStack的部署。 1. tempest的设计原则1. tempest应该能在任何OpenStack云上运行,无论是单节点DevStack安装,一个20节点LXC云,还是一个1000节点KVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tempest简介">
+<meta property="og:url" content="http://yoursite.com/2017/08/06/Tempest/index.html">
 <meta property="og:site_name" content="Blog">
+<meta property="og:description" content="一. 什么是tempestOpenStack的官方集成测试框架, 可以在一个活动的OpenStack集群上运行。 tempest可用于OpenStack API验证、场景和其他特定测试的测试，用于验证OpenStack的部署。 1. tempest的设计原则1. tempest应该能在任何OpenStack云上运行,无论是单节点DevStack安装,一个20节点LXC云,还是一个1000节点KVM">
+<meta property="og:updated_time" content="2017-08-07T02:17:59.934Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Blog">
+<meta name="twitter:title" content="Tempest简介">
+<meta name="twitter:description" content="一. 什么是tempestOpenStack的官方集成测试框架, 可以在一个活动的OpenStack集群上运行。 tempest可用于OpenStack API验证、场景和其他特定测试的测试，用于验证OpenStack的部署。 1. tempest的设计原则1. tempest应该能在任何OpenStack云上运行,无论是单节点DevStack安装,一个20节点LXC云,还是一个1000节点KVM">
   
     <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
   
@@ -149,114 +153,203 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Tempest" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Tempest简介
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/08/06/Tempest/" class="archive-article-date">
+
+        
+        <a href="/2017/08/06/Tempest/" class="archive-article-date">
   	<time datetime="2017-08-07T02:16:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-06</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/06/Tempest/">Tempest简介</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="一-什么是tempest"><a href="#一-什么是tempest" class="headerlink" title="一. 什么是tempest"></a>一. 什么是tempest</h1><pre><code>OpenStack的官方集成测试框架, 可以在一个活动的OpenStack集群上运行。
+tempest可用于OpenStack API验证、场景和其他特定测试的测试，用于验证OpenStack的部署。
+</code></pre><h2 id="1-tempest的设计原则"><a href="#1-tempest的设计原则" class="headerlink" title="1. tempest的设计原则"></a>1. tempest的设计原则</h2><h3 id="1-tempest应该能在任何OpenStack云上运行-无论是单节点DevStack安装-一个20节点LXC云-还是一个1000节点KVM云"><a href="#1-tempest应该能在任何OpenStack云上运行-无论是单节点DevStack安装-一个20节点LXC云-还是一个1000节点KVM云" class="headerlink" title="1. tempest应该能在任何OpenStack云上运行,无论是单节点DevStack安装,一个20节点LXC云,还是一个1000节点KVM云."></a>1. tempest应该能在任何OpenStack云上运行,无论是单节点DevStack安装,一个20节点LXC云,还是一个1000节点KVM云.</h3><h3 id="2-在测试特性方面-tempest的结果应该是明确的。显式总是更好的"><a href="#2-在测试特性方面-tempest的结果应该是明确的。显式总是更好的" class="headerlink" title="2. 在测试特性方面,tempest的结果应该是明确的。显式总是更好的."></a>2. 在测试特性方面,tempest的结果应该是明确的。显式总是更好的.</h3><h3 id="3-tempest使用Openstack公共接口-tempest测试只能访问Openstack-API"><a href="#3-tempest使用Openstack公共接口-tempest测试只能访问Openstack-API" class="headerlink" title="3. tempest使用Openstack公共接口. tempest测试只能访问Openstack API."></a>3. tempest使用Openstack公共接口. tempest测试只能访问Openstack API.</h3><h3 id="4-tempest不应该触及私有或实现特定的接口-这意味着不能直接访问数据库-不能直接访问管理程序"><a href="#4-tempest不应该触及私有或实现特定的接口-这意味着不能直接访问数据库-不能直接访问管理程序" class="headerlink" title="4. tempest不应该触及私有或实现特定的接口.这意味着不能直接访问数据库,不能直接访问管理程序,"></a>4. tempest不应该触及私有或实现特定的接口.这意味着不能直接访问数据库,不能直接访问管理程序,</h3><h3 id="5-不能测试OpenStack基本组件中不包括的扩展-如果有一些OpenStack的特性不能通过标准接口进行验证-那么这应该被认为是一种可能的增强测试"><a href="#5-不能测试OpenStack基本组件中不包括的扩展-如果有一些OpenStack的特性不能通过标准接口进行验证-那么这应该被认为是一种可能的增强测试" class="headerlink" title="5. 不能测试OpenStack基本组件中不包括的扩展.如果有一些OpenStack的特性不能通过标准接口进行验证,那么这应该被认为是一种可能的增强测试."></a>5. 不能测试OpenStack基本组件中不包括的扩展.如果有一些OpenStack的特性不能通过标准接口进行验证,那么这应该被认为是一种可能的增强测试.</h3><h3 id="6-tempest的目标是对OpenStack-API的完整覆盖-以及演示工作云的常见场景"><a href="#6-tempest的目标是对OpenStack-API的完整覆盖-以及演示工作云的常见场景" class="headerlink" title="6. tempest的目标是对OpenStack API的完整覆盖,以及演示工作云的常见场景."></a>6. tempest的目标是对OpenStack API的完整覆盖,以及演示工作云的常见场景.</h3><h3 id="7-tempest在OpenStack云中驱动负载-通过包含广泛的API和场景测试-tempest可以在整个或部分作为OpenStack云的负载生成"><a href="#7-tempest在OpenStack云中驱动负载-通过包含广泛的API和场景测试-tempest可以在整个或部分作为OpenStack云的负载生成" class="headerlink" title="7. tempest在OpenStack云中驱动负载.通过包含广泛的API和场景测试,tempest可以在整个或部分作为OpenStack云的负载生成."></a>7. tempest在OpenStack云中驱动负载.通过包含广泛的API和场景测试,tempest可以在整个或部分作为OpenStack云的负载生成.</h3><h3 id="8-tempest应该试图清理干净资源残留-只要有可能-我们应该在结束的时候释放资源"><a href="#8-tempest应该试图清理干净资源残留-只要有可能-我们应该在结束的时候释放资源" class="headerlink" title="8. tempest应该试图清理干净资源残留,只要有可能,我们应该在结束的时候释放资源."></a>8. tempest应该试图清理干净资源残留,只要有可能,我们应该在结束的时候释放资源.</h3><h3 id="9-tempest应该能自我测试"><a href="#9-tempest应该能自我测试" class="headerlink" title="9. tempest应该能自我测试."></a>9. tempest应该能自我测试.</h3><h2 id="2-tempest的目录与代码结构"><a href="#2-tempest的目录与代码结构" class="headerlink" title="2.tempest的目录与代码结构"></a>2.tempest的目录与代码结构</h2><pre><code>* 一级目录结构
+    tempest-master/
+    |--etc/       &lt;--tempest相关配置
+    |--tempest/   &lt;--各个组件测试用例
+    |--Tools      &lt;--搭建环境的脚本
 
-        <div class="article-info info-on-right">
-          
-          
+* 二级目录结构
+    tempest/
+    |--api/       &lt;--openstack组件API接口测试用例        
+    |--cmd/       &lt;--openstack的命令工具测试集
+    |--common     &lt;--测试通用类, 如Rest Client
+    |--hacking    &lt;--代码风格检测, 在pep8基础上针对openstack开发者做的补充
+    |--scenario   &lt;--scenario根据一些复杂场景进行测试, 属于系统测试用例
+    |--services   &lt;--给相应的组件提供模块接口
+    |--test_discover &lt;--继承unittest,从api,cli,scenario,thirdparty一次查找测试用例
+    |--tests      &lt;--针对tempest本身代码的单元测试
+    |--thirdparty &lt;--这部分主要针对于EC2的API测试用例
 
+* 三级目录结构
+    api/
+    |--compute    &lt;--nova项目用例
+    |--identity   &lt;--keystone项目用例
+    |--image      &lt;--glance项目用例
+    |--network    &lt;--neutron项目用例
+    |--object_storage &lt;--swift项目用例
+    |--volume     &lt;--cinder项目用例
+</code></pre><h1 id="二-tempest的优缺点"><a href="#二-tempest的优缺点" class="headerlink" title="二. tempest的优缺点"></a>二. tempest的优缺点</h1><h2 id="1-适用场景"><a href="#1-适用场景" class="headerlink" title="1. 适用场景"></a>1. 适用场景</h2><h2 id="2-优点"><a href="#2-优点" class="headerlink" title="2. 优点"></a>2. 优点</h2><h3 id="1-tempest可以自动寻找、执行测试-自动查找当前目录下所有以-Tt-est开头的Python源文件-并且按此规则递归查找子目录-所有以-Tt-est开头的Python源文件里所有以-Tt-est开头的function和class-以及继承自unittest-TestCase的class-不需要以-Tt-est开头-都会被执行"><a href="#1-tempest可以自动寻找、执行测试-自动查找当前目录下所有以-Tt-est开头的Python源文件-并且按此规则递归查找子目录-所有以-Tt-est开头的Python源文件里所有以-Tt-est开头的function和class-以及继承自unittest-TestCase的class-不需要以-Tt-est开头-都会被执行" class="headerlink" title="1. tempest可以自动寻找、执行测试: 自动查找当前目录下所有以[Tt]est开头的Python源文件,并且按此规则递归查找子目录;所有以[Tt]est开头的Python源文件里所有以[Tt]est开头的function和class, 以及继承自unittest.TestCase的class(不需要以[Tt]est开头)都会被执行"></a>1. tempest可以自动寻找、执行测试: 自动查找当前目录下所有以[Tt]est开头的Python源文件,并且按此规则递归查找子目录;所有以[Tt]est开头的Python源文件里所有以[Tt]est开头的function和class, 以及继承自unittest.TestCase的class(不需要以[Tt]est开头)都会被执行</h3><h3 id="2-tempest可以指定文件、模块、函数进行测试"><a href="#2-tempest可以指定文件、模块、函数进行测试" class="headerlink" title="2. tempest可以指定文件、模块、函数进行测试"></a>2. tempest可以指定文件、模块、函数进行测试</h3><h3 id="3-tempest可以指定类型进行测试"><a href="#3-tempest可以指定类型进行测试" class="headerlink" title="3. tempest可以指定类型进行测试"></a>3. tempest可以指定类型进行测试</h3><h3 id="4-tempest可扩展性-可以方便的在tempest中添加其他测试用例-可以整合其他类型测试例如压力测试、场景测试等"><a href="#4-tempest可扩展性-可以方便的在tempest中添加其他测试用例-可以整合其他类型测试例如压力测试、场景测试等" class="headerlink" title="4. tempest可扩展性,可以方便的在tempest中添加其他测试用例,可以整合其他类型测试例如压力测试、场景测试等"></a>4. tempest可扩展性,可以方便的在tempest中添加其他测试用例,可以整合其他类型测试例如压力测试、场景测试等</h3><h2 id="3-缺点"><a href="#3-缺点" class="headerlink" title="3. 缺点"></a>3. 缺点</h2><h3 id="1-无法进行性能测试-不能针对某个资源一直操作"><a href="#1-无法进行性能测试-不能针对某个资源一直操作" class="headerlink" title="1. 无法进行性能测试,不能针对某个资源一直操作"></a>1. 无法进行性能测试,不能针对某个资源一直操作</h3><h3 id="2-社区原始的用例都是api用例-黑盒用例比较少"><a href="#2-社区原始的用例都是api用例-黑盒用例比较少" class="headerlink" title="2. 社区原始的用例都是api用例, 黑盒用例比较少"></a>2. 社区原始的用例都是api用例, 黑盒用例比较少</h3><h1 id="三-tempest的快速上手"><a href="#三-tempest的快速上手" class="headerlink" title="三. tempest的快速上手"></a>三. tempest的快速上手</h1><h2 id="1-tempest的安装及配置"><a href="#1-tempest的安装及配置" class="headerlink" title="1. tempest的安装及配置"></a>1. tempest的安装及配置</h2><h3 id="1-安装依赖"><a href="#1-安装依赖" class="headerlink" title="1. 安装依赖:"></a>1. 安装依赖:</h3><pre><code>yum install libxslt-devel libevent-devel openssl-devel libffi-devel python-devel python-pip
+</code></pre><h3 id="2-安装tempest"><a href="#2-安装tempest" class="headerlink" title="2. 安装tempest:"></a>2. 安装tempest:</h3><pre><code>pip install tempest
+</code></pre><h3 id="3-使用tempest创建一个叫cloud-01的工作空间"><a href="#3-使用tempest创建一个叫cloud-01的工作空间" class="headerlink" title="3. 使用tempest创建一个叫cloud-01的工作空间:"></a>3. 使用tempest创建一个叫cloud-01的工作空间:</h3><pre><code>tempest init cloud-01
+</code></pre><h3 id="4-进入cloud-01工作空间对-etc-tempest-conf进行配置"><a href="#4-进入cloud-01工作空间对-etc-tempest-conf进行配置" class="headerlink" title="4. 进入cloud-01工作空间对./etc/tempest.conf进行配置"></a>4. 进入cloud-01工作空间对./etc/tempest.conf进行配置</h3><pre><code>cd cloud-01/etc
+vim ./etc/tempest.conf
+</code></pre><h3 id="5-运行tempest-看是否能正确运行"><a href="#5-运行tempest-看是否能正确运行" class="headerlink" title="5. 运行tempest, 看是否能正确运行"></a>5. 运行tempest, 看是否能正确运行</h3><pre><code>tempest run --workspace cloud-01 --regex &apos;tempest.api.baremetal.admin.test_nodes&apos;
+</code></pre><h2 id="2-tempest-plugin的编写及运行"><a href="#2-tempest-plugin的编写及运行" class="headerlink" title="2. tempest plugin的编写及运行"></a>2. tempest plugin的编写及运行</h2><h3 id="1-安装cookiecutter"><a href="#1-安装cookiecutter" class="headerlink" title="1. 安装cookiecutter"></a>1. 安装cookiecutter</h3><pre><code>pip install -U cookiecutter
+</code></pre><h3 id="2-创建一个plugin-然后填入project、repo-name以及testclass-如下图所示。"><a href="#2-创建一个plugin-然后填入project、repo-name以及testclass-如下图所示。" class="headerlink" title="2. 创建一个plugin, 然后填入project、repo_name以及testclass,如下图所示。"></a>2. 创建一个plugin, 然后填入project、repo_name以及testclass,如下图所示。</h3><pre><code>cookiecutter http://code.huawei.com/FusionSphereCID/tempest-plugin-cookiecutter.git
+相关参数说明:
+    project -- 项目名称
+    repo_name -- 仓库名
+    testclass -- 插件的类名
+</code></pre><h3 id="3-查看具体的test测试用例"><a href="#3-查看具体的test测试用例" class="headerlink" title="3. 查看具体的test测试用例"></a>3. 查看具体的test测试用例</h3><pre><code>cd ./fs_repo/fs_repo_tempest_plugin/tests
+ls
+api目录是api测试用例, scenario目录是场景用例
+</code></pre><h3 id="4-编写自己的测试用例"><a href="#4-编写自己的测试用例" class="headerlink" title="4. 编写自己的测试用例"></a>4. 编写自己的测试用例</h3><pre><code>cd ./api
+vi test_hello_world.py
+保存
+</code></pre><h3 id="5-安装plugin并执行测试"><a href="#5-安装plugin并执行测试" class="headerlink" title="5. 安装plugin并执行测试"></a>5. 安装plugin并执行测试</h3><pre><code>cd ~/fs_repo
+git init
+python setup.py install
+tempest run --workspace cloud-01 --regex &apos;fs_repo_tempest_plugin.tests.api.test_hello_world&apos;
+</code></pre>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/08/06/Tempest/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/29/Devstack-Rally-Osprofiler/" class="archive-article-date">
-  	<time datetime="2017-07-30T06:57:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-29</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2017/07/29/Devstack-Rally-Osprofiler/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">rally+osprofiler对openstack进行性能测试</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/29/Devstack-Rally-Osprofiler/">rally+osprofiler对openstack进行性能测试</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">rally</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/07/20/hello-world/" class="archive-article-date">
-  	<time datetime="2017-07-20T09:17:14.943Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-07-20</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/20/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -279,8 +372,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
